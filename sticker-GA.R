@@ -4,22 +4,20 @@ library(dplyr)
 library(hexSticker)
 
 
-#basic image processing
+## basic image processing
 img <- image_read("figures/gene.jpeg")
 
-img %>%
+res <- img %>%
   image_convert("png") %>%
   image_resize("1080 x 200")%>%
-  image_fill(color="#062047", point="+45") -> res
+  image_fill(color="#062047", point="+45")
 
-res
-
-# wrap in plot to preview ie plot(sticker(...))
+## wrap in plot to preview ie plot(sticker(...))
 final_res<-sticker(res, package="GA", p_size = 15,
                    p_y = 1.5,
                    s_x=1, s_y=0.8, s_width=1.1,
                    s_height = 14,
-                   filename="stickerSample.png",
+                   filename="figures/stickerSample.png",
                    h_fill="#062047",
                    h_color = "#062047")
 
