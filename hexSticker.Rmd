@@ -1,9 +1,8 @@
 ---
-output: github_document
+output:
+  pdf_document: default
 urlcolor: blue
 ---
-
-<!-- README.md is generated from README.Rmd. Please edit that file -->
 
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
@@ -16,9 +15,11 @@ options(tibble.print_min = 5, tibble.print_max = 5)
 
 # On the creation of hexStickers for published R packages
 
-  The purpose of this repository is to provide a couple of concrete examples sorrounding the creation of unique hexagonal package identifiers with the 'hexStickers' package.
+When developing and publishing an R package, one may be interested in the creation of hexStickers. What are hexStickers? They seem to be at the backbone of any large package in R, yet they are elusive in their design and creation - it almost seems like a <strong>right of passage</strong> to engender an unique and creative hexSticker to accompany the deployment of your package. I hope that this blog post will allow
+
+The purpose of this article is to provide a couple of concrete examples surrounding the creation of unique hexagonal package identifiers with the 'hexStickers' package. Code and further examples can be found at this repository: https://github.com/AndrewM1130/hexSticker. 
   
-### 1. Create or download background image for sticker
+## 1. Create or download background image for sticker
   
 ```{r}
 ## required packages
@@ -27,7 +28,7 @@ library(dplyr)
 library(hexSticker)
 ```
   
-### 2. Basic Image Processing
+## 2. Basic Image Processing
   
 ```{r}
 img <- image_read("figures/gene.jpeg")
@@ -40,7 +41,7 @@ res <- img %>%
 res
 ```
 
-### 3. Building the sticker itself 
+## 3. Building the sticker itself 
   
 ```{r}
 final_res <- sticker(res, package="GA", p_size = 15,
@@ -52,12 +53,12 @@ final_res <- sticker(res, package="GA", p_size = 15,
                    h_color = "#062047")
 ```
   
-### 4. Export and save the sticker
+## 4. Export and save the sticker
   
 ```{r}
 plot(final_res)
 ```
   
-### Gallery
+## Gallery
 
   Below are a couple of interesting hexStickers that I have created for personal projects - I am confident that this is only a shallow dive into the creation of these stickers. For further research, I would suggest diving deeper into the image-altering functions within the 'magick' pacakge. 
