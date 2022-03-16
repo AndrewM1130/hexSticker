@@ -1,6 +1,7 @@
 ---
 output:
-  pdf_document: default
+  pdf_document: 
+    keep_md: yes
 urlcolor: blue
 ---
 
@@ -18,9 +19,7 @@ options(tibble.print_min = 5, tibble.print_max = 5)
 When developing and publishing an R package, one may be interested in the creation of hexStickers. What are hexStickers? They seem to be at the backbone of any large package in R, yet they are elusive in their design and creation - it almost seems like a <strong>right of passage</strong> to engender an unique and creative hexSticker to accompany the deployment of your package. I hope that this blog post will allow
 
 The purpose of this article is to provide a couple of concrete examples surrounding the creation of unique hexagonal package identifiers with the 'hexStickers' package. Code and further examples can be found at this repository: https://github.com/AndrewM1130/hexSticker. 
-  
-## 1. Create or download background image for sticker
-  
+
 ```{r}
 ## required packages
 library(magick)
@@ -28,20 +27,29 @@ library(dplyr)
 library(hexSticker)
 ```
   
+## 1. Create or download background image for sticker
+  
+  For this example, we will be creating a hexSticker to publish alongside my Genetic Algorithm package - thus, a gene may be fitting. This image can be found in the `figs` folder via the attached Github link above.
+
 ## 2. Basic Image Processing
+
+  The `magick` package in R provides us with all the necessary image pre-processing tools we need - feel free to alter the image in any way you see fit. However, note that necessary pre-processing steps *need to include* an image resizing of under `3000x3000`, where 3000 is the width of the hexagonal sticker (I'm sure there are clever tricks around this constraint). If you image is not resized accordingly, it will not fit inside the sticker background! 
+
   
 ```{r}
 img <- image_read("figures/gene.jpeg")
 
 res <- img %>%
   image_convert("png") %>%
-  image_resize("1080 x 200")%>%
+  image_resize("1080 x 1000")%>%
   image_fill(color="#062047", point="+45")
 
 res
 ```
 
 ## 3. Building the sticker itself 
+
+  Creating the hexSticker itself is pretty simple and intuitive with the `hexStickers` package. We can simply create a `sticker` object with our desired width, height, e.t.c. I believe there are ~20 options for aesthetic changes - I personally recommend committing all image altercations with `magick` and using the `sticker()` function to build the final product. 
   
 ```{r}
 final_res <- sticker(res, package="GA", p_size = 15,
@@ -54,7 +62,15 @@ final_res <- sticker(res, package="GA", p_size = 15,
 ```
   
 ## 4. Export and save the sticker
+
+  All that remains to do is save the sticker locally. If you made it this far, here's another R trick so you never have to `gg.save` or `image.save` again - when working with R markdown or notebook documents, including 
   
+output:
+  pdf_document: 
+    keep_md: yes
+    
+in the YAML header results in R saving all images for you as background processes. Furthermore, the saved images update after re-running the code, so you will always have the latest plots stored. 
+    
 ```{r}
 plot(final_res)
 ```
